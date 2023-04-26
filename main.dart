@@ -52,7 +52,7 @@ class FirstPage extends StatelessWidget {
         child: TextButton(
           onPressed: () {
             Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return const SecondPage(title: 'SecondPage');
+              return const SearchList(title: 'Search Results');
             }));
           },
           child: const Text('Next'),
@@ -62,9 +62,102 @@ class FirstPage extends StatelessWidget {
   }
 }
 
-class SecondPage extends StatelessWidget {
-  const SecondPage({Key? key, required this.title}) : super(key: key);
+class SearchList extends StatelessWidget {
+  const SearchList({Key? key, required this.title}) : super(key: key);
   final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    List listOfItems=List.generate(20, (index) => 'Sample Item - $index');
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(title),
+      ),
+      body: ListView.separated(
+        itemCount: listOfItems.length,
+        itemBuilder: (BuildContext context,int index){
+          return ListTile(
+            onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return const InfoView(title: 'Title');
+              }));
+            },
+            title: Text(listOfItems[index]),
+            subtitle: Text('Sample subtitle for item #$index'),
+            leading: Container(
+              height: 50,
+              width: 50,
+              color: Colors.amber,
+            ),
+            trailing: Icon(Icons.edit),
+          );
+        }, separatorBuilder: (BuildContext context, int index) {
+        return const Divider();
+      }, ),
+
+
+      /*body: Center(
+        child: TextButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: const Text('Go Back'),
+        ),
+      ),*/
+    );
+  }
+}
+
+class InfoView extends StatelessWidget {
+  const InfoView({Key? key, required this.title}) : super(key: key);
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    List listOfItems=List.generate(20, (index) => 'Sample Item - $index');
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(title),
+      ),
+      body: ListView.separated(
+        itemCount: listOfItems.length,
+        itemBuilder: (BuildContext context,int index){
+          return ListTile(
+            onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return const InfoView(title: 'Search Results');
+              }));
+            },
+            title: Text(listOfItems[index]),
+            subtitle: Text('Sample subtitle for item #$index'),
+            leading: Container(
+              height: 50,
+              width: 50,
+              color: Colors.amber,
+            ),
+            trailing: Icon(Icons.edit),
+          );
+        }, separatorBuilder: (BuildContext context, int index) {
+        return const Divider();
+      }, ),
+
+
+      /*body: Center(
+        child: TextButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: const Text('Go Back'),
+        ),
+      ),*/
+    );
+  }
+}
+
+class EditView extends StatelessWidget {
+  const EditView({Key? key, required this.title}) : super(key: key);
+  final String title;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,9 +167,11 @@ class SecondPage extends StatelessWidget {
       body: Center(
         child: TextButton(
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return const SearchList(title: 'Search Results');
+            }));
           },
-          child: const Text('Go Back'),
+          child: const Text('Next'),
         ),
       ),
     );
